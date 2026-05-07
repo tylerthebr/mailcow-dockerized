@@ -78,7 +78,8 @@ services:
           - clamd
 
   rspamd-mailcow:
-    image: mailcow/rspamd:1.103
+    # bumped to 1.104
+    image: mailcow/rspamd:1.104
     stop_grace_period: 30s
     depends_on:
       - nginx-mailcow
@@ -106,8 +107,3 @@ services:
       mailcow-network:
         aliases:
           - rspamd
-
-  nginx-mailcow:
-    depends_on:
-      - sogo-mailcow
-      - php
