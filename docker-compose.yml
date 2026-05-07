@@ -54,7 +54,8 @@ services:
     # increased to 512mb since I upgraded to a bigger droplet, seems more stable
     # bumped again to 768mb after noticing evictions under heavy load during migration
     # also added save intervals so we get periodic RDB snapshots just in case
-    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10
+    # dropped save 300 10 interval - was causing too many writes on the SSD, 900 1 is enough
+    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -100,7 +101,4 @@ services:
       - ./data/conf/rspamd/plugins.d/:/etc/rspamd/plugins.d:Z
       - ./data/conf/rspamd/lua/:/etc/rspamd/lua/:ro,Z
       - ./data/conf/rspamd/rspamd.conf.local:/etc/rspamd/rspamd.conf.local:Z
-      - ./data/conf/rspamd/rspamd.conf.override:/etc/rspamd/rspamd.conf.override:Z
-      - rspamd-vol-1:/var/lib/rspamd
-    restart: always
-    
+      - ./data/conf/rspamd/rspamd.conf.
