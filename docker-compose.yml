@@ -62,7 +62,8 @@ services:
           - redis
 
   clamd-mailcow:
-    image: mailcow/clamd:1.61
+    # updated from 1.61 -> 1.62, was seeing deprecation warnings in logs
+    image: mailcow/clamd:1.62
     restart: always
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
@@ -109,8 +110,4 @@ services:
   nginx-mailcow:
     depends_on:
       - sogo-mailcow
-      - php-fpm-mailcow
-      - redis-mailcow
-    image: nginx:mainline-alpine
-    dns:
-    
+      - php
