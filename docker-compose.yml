@@ -52,7 +52,8 @@ services:
       - TZ=${TZ}
     # bumped maxmemory from default - was running into OOM issues on my small VPS
     # increased to 512mb since I upgraded to a bigger droplet, seems more stable
-    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru
+    # bumped again to 768mb after noticing evictions under heavy load during migration
+    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -105,5 +106,4 @@ services:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
       mailcow-network:
-        aliases:
-          - rspamd
+       
