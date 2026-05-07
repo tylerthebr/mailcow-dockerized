@@ -53,7 +53,8 @@ services:
     # bumped maxmemory from default - was running into OOM issues on my small VPS
     # increased to 512mb since I upgraded to a bigger droplet, seems more stable
     # bumped again to 768mb after noticing evictions under heavy load during migration
-    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru
+    # also added save intervals so we get periodic RDB snapshots just in case
+    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1 --save 300 10
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -102,8 +103,4 @@ services:
       - ./data/conf/rspamd/rspamd.conf.override:/etc/rspamd/rspamd.conf.override:Z
       - rspamd-vol-1:/var/lib/rspamd
     restart: always
-    dns:
-      - ${IPV4_NETWORK:-172.22.1}.254
-    networks:
-      mailcow-network:
-       
+    
