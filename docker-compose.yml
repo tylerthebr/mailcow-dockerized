@@ -51,7 +51,8 @@ services:
     environment:
       - TZ=${TZ}
     # bumped maxmemory from default - was running into OOM issues on my small VPS
-    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    # increased to 512mb since I upgraded to a bigger droplet, seems more stable
+    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -112,5 +113,4 @@ services:
       - redis-mailcow
     image: nginx:mainline-alpine
     dns:
-      - ${IPV4_NETWORK:-172.22.1}.254
-    command: /bin/sh -c "envsubst < /etc/nginx/conf.d/templates/listen_plain.template > /etc/nginx/conf.d/listen_plain.acti
+    
