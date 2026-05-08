@@ -89,12 +89,11 @@ services:
     # to finish processing messages in queue before shutting down cleanly
     # bumped further to 90s after a particularly busy day caused some messages to get dropped
     # bumped to 120s - still occasionally seeing dropped messages on busy days, giving it more room
-    stop_grace_period: 120s
+    # bumped to 150s - had another incident last week, just going to be generous here
+    stop_grace_period: 150s
     depends_on:
       - nginx-mailcow
       - redis-mailcow
     environment:
       - TZ=${TZ}
-      - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
-      - IPV6_NETWORK=${IPV6_NETWORK:-fd4d:6169:6c63:6f77::}
-      - RE
+      - IPV4_NETWORK=${IPV4_N
