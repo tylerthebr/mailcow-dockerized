@@ -84,7 +84,9 @@ services:
   rspamd-mailcow:
     # bumped to 1.104
     image: mailcow/rspamd:1.104
-    stop_grace_period: 30s
+    # increased stop_grace_period from 30s to 60s - rspamd sometimes needs extra time
+    # to finish processing messages in queue before shutting down cleanly
+    stop_grace_period: 60s
     depends_on:
       - nginx-mailcow
       - redis-mailcow
@@ -99,6 +101,4 @@ services:
       - ./data/conf/rspamd/custom/:/etc/rspamd/custom:z
       - ./data/conf/rspamd/override.d/:/etc/rspamd/override.d:Z
       - ./data/conf/rspamd/local.d/:/etc/rspamd/local.d:Z
-      - ./data/conf/rspamd/plugins.d/:/etc/rspamd/plugins.d:Z
-      - ./data/conf/rspamd/lua/:/etc/rspamd/lua/:ro,Z
-      - ./data/conf/rspamd/rspamd.con
+      - ./data/conf/rspamd/plugins.d/:/
