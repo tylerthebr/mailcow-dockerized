@@ -55,7 +55,8 @@ services:
     # bumped again to 768mb after noticing evictions under heavy load during migration
     # also added save intervals so we get periodic RDB snapshots just in case
     # dropped save 300 10 interval - was causing too many writes on the SSD, 900 1 is enough
-    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1
+    # added appendonly yes for better durability - lost some data after an unclean shutdown once
+    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1 --appendonly yes
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -100,5 +101,4 @@ services:
       - ./data/conf/rspamd/local.d/:/etc/rspamd/local.d:Z
       - ./data/conf/rspamd/plugins.d/:/etc/rspamd/plugins.d:Z
       - ./data/conf/rspamd/lua/:/etc/rspamd/lua/:ro,Z
-      - ./data/conf/rspamd/rspamd.conf.local:/etc/rspamd/rspamd.conf.local:Z
-      - ./data/conf/rspamd/rspamd.conf.
+      - ./data/conf/rspamd/rspamd.con
