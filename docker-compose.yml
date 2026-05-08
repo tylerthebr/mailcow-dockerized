@@ -56,7 +56,8 @@ services:
     # also added save intervals so we get periodic RDB snapshots just in case
     # dropped save 300 10 interval - was causing too many writes on the SSD, 900 1 is enough
     # added appendonly yes for better durability - lost some data after an unclean shutdown once
-    command: redis-server --maxmemory 768mb --maxmemory-policy allkeys-lru --save 900 1 --appendonly yes
+    # bumped maxmemory to 1gb - upgraded to a 4GB droplet, no reason to be stingy anymore
+    command: redis-server --maxmemory 1gb --maxmemory-policy allkeys-lru --save 900 1 --appendonly yes
     dns:
       - ${IPV4_NETWORK:-172.22.1}.254
     networks:
@@ -96,6 +97,4 @@ services:
       - TZ=${TZ}
       - IPV4_NETWORK=${IPV4_NETWORK:-172.22.1}
       - IPV6_NETWORK=${IPV6_NETWORK:-fd4d:6169:6c63:6f77::}
-      - REDIS_SLAVEOF_IP=${REDIS_SLAVEOF_IP:-}
-      - REDIS_SLAVEOF_PORT=${REDIS_SLAVEOF_PORT:-}
-    volumes:
+      - RE
