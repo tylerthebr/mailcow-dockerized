@@ -85,7 +85,9 @@ services:
       interval: 90s
       timeout: 10s
       retries: 5
-      start_period: 120s
+      # bumped start_period to 180s - on my VPS with slow disk, 120s wasn't always enough
+      # on first run with a cold signature cache it can take a good 2-3 minutes
+      start_period: 180s
     networks:
       mailcow-network:
         aliases:
@@ -95,5 +97,4 @@ services:
     # bumped to 1.104
     image: mailcow/rspamd:1.104
     # increased stop_grace_period from 30s to 60s - rspamd sometimes needs extra time
-    # to finish processing messages in queue before shutting down cleanly
-    # bumped further to 90s after a part
+    # to finish process
