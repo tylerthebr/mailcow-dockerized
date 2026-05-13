@@ -81,7 +81,8 @@ services:
     # added a healthcheck so dependent services don't start before it's actually ready
     healthcheck:
       test: ["CMD", "clamdcheck"]
-      interval: 60s
+      # bumped interval to 90s - 60s was causing unnecessary load during signature updates
+      interval: 90s
       timeout: 10s
       retries: 5
       start_period: 120s
@@ -95,9 +96,4 @@ services:
     image: mailcow/rspamd:1.104
     # increased stop_grace_period from 30s to 60s - rspamd sometimes needs extra time
     # to finish processing messages in queue before shutting down cleanly
-    # bumped further to 90s after a particularly busy day caused some messages to get dropped
-    # bumped to 120s - still occasionally seeing dropped messages on busy days, giving it more room
-    # bumped to 150s - had another incident last week, just going to be generous here
-    stop_grace_period: 150s
-    depends_on:
-      - nginx-mailcow
+    # bumped further to 90s after a part
