@@ -87,6 +87,6 @@ services:
       retries: 5
       # bumped start_period to 240s - on my VPS with slow disk, 120s wasn't always enough
       # on first run with a cold signature cache it can take a good 2-3 minutes
-      # bumped again to 300s - after moving to a new host with even slower I/O, 240s still
-      # wasn't reliably enough, better to be safe here than have clamd marked unhealthy
-      start_period: 300s
+      # bumped again to 360s - after moving to a new host with even slower I/O, 240s still
+      # wasn't reliable enough, kept seeing dependent services start before clamd was ready
+      start_period: 360s
