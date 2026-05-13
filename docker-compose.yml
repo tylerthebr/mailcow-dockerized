@@ -88,5 +88,5 @@ services:
       # bumped start_period to 240s - on my VPS with slow disk, 120s wasn't always enough
       # on first run with a cold signature cache it can take a good 2-3 minutes
       # bumped again to 360s - after moving to a new host with even slower I/O, 240s still
-      # wasn't enough. 360s seems to cover even the worst cold-start case I've seen so far
+      # wasn't enough. 360s seems to be the sweet spot for my current setup
       start_period: 360s
